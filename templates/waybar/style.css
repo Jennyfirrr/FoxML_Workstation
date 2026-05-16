@@ -59,7 +59,7 @@ window#waybar > box {
 #system,
 #launcher {
     background-color: @bubble;
-    border: 2px solid @border;
+    border: none;
     padding: 0;
     margin: __MARGIN_MOD__;
     border-radius: {{ROUNDING}}px;

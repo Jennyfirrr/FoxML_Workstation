@@ -22,7 +22,7 @@ window {
   y-offset: 50px;
   width: 480px;
   border-radius: {{ROUNDING}}px;
-  border: 2px;
+  border: {{BORDER_SIZE}}px;
   border-color: #{{PRIMARY}};
   background-color: rgba({{BG_R}},{{BG_G}},{{BG_B}},{{POPUP_BG_OPACITY}});
   padding: 12px;
@@ -39,7 +39,7 @@ inputbar {
   background-color: transparent;
   text-color: #{{FG}};
   border-radius: 0;
-  border: 1px;
+  border: {{BORDER_SIZE}}px;
   border-color: #{{PRIMARY}};
   padding: 10px;
 }

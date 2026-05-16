@@ -5,9 +5,9 @@
 
     # Geometry
     width = (300, 500)
-    height = 300
+    height = (0, 300)
     origin = top-right
-    offset = 20x50
+    offset = (20, 50)
 
     # Progress bar
     progress_bar = {{SHOW_WELCOME}}

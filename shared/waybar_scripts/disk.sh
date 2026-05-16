@@ -16,4 +16,4 @@ if (( pct >= 95 )); then cls=',"class":"critical"'
 elif (( pct >= 80 )); then cls=',"class":"warning"'
 fi
 
-printf '{"text":"DISK %sg/%sg","tooltip":"%s%% of /"%s}\n' "$used_gb" "$total_gb" "$pct" "$cls"
+printf '{"text":"󰋊 %sg/%sg","tooltip":"%s%% of /"%s}\n' "$used_gb" "$total_gb" "$pct" "$cls"

@@ -51,7 +51,7 @@ if [[ -n "$gpu_util" ]]; then
 fi
 
 if [[ -n "$temp" ]]; then
-    printf '{"text":"CPU %s%% %s°","tooltip":"%s"%s}\n' "$usage" "$temp" "$tooltip" "$cls"
+    printf '{"text":"󰻠 %s%% %s°","tooltip":"%s"%s}\n' "$usage" "$temp" "$tooltip" "$cls"
 else
-    printf '{"text":"CPU %s%%","tooltip":"%s"%s}\n' "$usage" "$tooltip" "$cls"
+    printf '{"text":"󰻠 %s%%","tooltip":"%s"%s}\n' "$usage" "$tooltip" "$cls"
 fi

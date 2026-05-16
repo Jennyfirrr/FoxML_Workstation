@@ -12,18 +12,32 @@
   "modules-center": [],
 
   "modules-right": [
-    "custom/foxml_sentry",
-    "custom/net_speed",
-    "custom/cpu",
-    "memory",
-    "custom/disk",
-    "power-profiles-daemon",
-    "custom/battery",
-    "idle_inhibitor",
+    "group/system",
+    "group/hardware",
     "custom/clock",
-    "custom/system_health",
     "tray"
   ],
+
+  "group/system": {
+    "orientation": "horizontal",
+    "modules": [
+        "custom/foxml_sentry",
+        "custom/system_health",
+        "power-profiles-daemon",
+        "custom/battery",
+        "idle_inhibitor"
+    ]
+  },
+
+  "group/hardware": {
+    "orientation": "horizontal",
+    "modules": [
+        "custom/net_speed",
+        "custom/cpu",
+        "memory",
+        "custom/disk"
+    ]
+  },
 
   "group/launcher": {
     "orientation": "horizontal",
@@ -84,7 +98,7 @@
   },
 
   "memory": {
-    "format": "RAM {used:0.1f}/{total:0.0f}g",
+    "format": "󰍛 {used:0.1f}/{total:0.0f}g",
     "interval": 5,
     "states": {
       "warning": 75,

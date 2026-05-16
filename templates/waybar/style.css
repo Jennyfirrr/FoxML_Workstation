@@ -51,33 +51,52 @@ window#waybar > box {
 /* ─────────────────────────────────────────
    Module Base Style
    ───────────────────────────────────────── */
-#custom-battery,
-#custom-cpu,
-#memory,
-#custom-disk,
-#custom-gpu,
-#custom-ai_status,
-#power-profiles-daemon,
-#idle_inhibitor,
 #custom-clock,
 #tray,
+#custom-ai_status,
 #custom-media,
-#custom-net_speed,
-#custom-overwatch,
-#custom-security,
-#custom-foxml_sentry,
-#custom-system_health,
+#hardware,
+#system,
 #launcher {
     background-color: @bubble;
     border: 2px solid @border;
-    padding: __PAD_MOD__;
+    padding: 0;
     margin: __MARGIN_MOD__;
     border-radius: {{ROUNDING}}px;
     color: @peach;
 }
 
-#launcher {
-    padding: 0; /* Launcher group handles its own internal spacing */
+#custom-clock,
+#custom-ai_status {
+    padding: __PAD_MOD__;
+}
+
+#tray > * {
+    padding: __PAD_MOD__;
+}
+
+/* Individual items within groups need spacing but NO background/border */
+#hardware > *,
+#system > *,
+#launcher > * {
+    padding: __PAD_MOD__;
+    margin: 0;
+}
+
+/* Clear specific borders for elements that were originally root-level */
+#custom-battery,
+#custom-cpu,
+#memory,
+#custom-disk,
+#custom-gpu,
+#power-profiles-daemon,
+#idle_inhibitor,
+#custom-net_speed,
+#custom-foxml_sentry,
+#custom-system_health {
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
 }
 
 /* ─────────────────────────────────────────
@@ -176,12 +195,10 @@ window#waybar > box {
 
 #custom-foxml_sentry.warning {
     color: #{{YELLOW}};
-    border: 2px solid rgba({{YELLOW_R}},{{YELLOW_G}},{{YELLOW_B}}, {{KITTY_BG_OPACITY}});
 }
 
 #custom-foxml_sentry.critical {
     color: #{{RED}};
-    border: 2px solid rgba({{RED_R}},{{RED_G}},{{RED_B}}, 0.7);
 }
 
 #custom-ai_status {

@@ -66,15 +66,13 @@ element {
   text-color: #{{FG}};
   border-radius: {{ROUNDING}}px;
   padding: 8px 12px;
-  border: 1px;
-  border-color: transparent;
+  border: 0px;
 }
 
 /* selected bubble (ring-ish look) */
 element selected {
   background-color: rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.25);
   text-color: #{{FG}};
-  border-color: #{{PRIMARY}};
 }
 
 /* icon + text */

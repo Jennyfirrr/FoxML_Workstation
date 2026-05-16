@@ -82,6 +82,8 @@ alias fdistro='fox-distro-guide'
 alias fbuild='fox-distro-build'
 alias fflash='fox-distro-flash'
 alias fhelp='fhelp'
+alias fwc='fox-word-count'
+alias word-count='fox-word-count'
 alias f-on='sudo systemctl start ollama && echo "🦊 Fox Brain is online."'
 alias f-off='sudo systemctl stop ollama && echo "🦊 Fox Brain is offline."'
 

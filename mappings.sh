@@ -142,6 +142,7 @@ SHARED_MAPPINGS=(
     "bin/findex|~/.local/bin/findex"
     "bin/fask|~/.local/bin/fask"
     "bin/fhelp|~/.local/bin/fhelp"
+    "bin/fox-word-count|~/.local/bin/fox-word-count"
 
     # Distro profiles
     "foxml-profile.json|~/.local/share/foxml/distro/foxml-profile.json"

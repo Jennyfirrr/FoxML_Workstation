@@ -4,6 +4,12 @@ All notable changes to the Fox ML theme.
 
 ## 2026-05-16 — v2.8.4
 
+### Word-count utility
+
+- **`fox-word-count`** (`shared/bin/fox-word-count`) — New utility to count lines, words, and characters across the workspace. Automatically excludes common noise (`.git`, `node_modules`, binaries) and provides a breakdown by file extension.
+- **Aliases** — Added `fwc` and `word-count` to `shared/zsh_aliases.zsh`.
+- **Integrated** — Wired into the unified `fox` dispatcher and documented in `KEYBINDS.md`.
+
 ### Installer idempotency + render safety
 
 Re-running the installer used to silently rewrite system files and re-prompt wizard questions every time. The audit below makes modules check on-disk content before writing, and the render module refuses to wipe live `~/.config` edits without asking first.

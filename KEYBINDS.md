@@ -518,6 +518,7 @@ Shows indent guides automatically. No keybinds.
 | `ALT + Shift + L` | Toggle DPMS (screen sleep) |
 | `ALT + B` | Toggle waybar visibility |
 | `ALT + W` | Cycle wallpaper (fade transition) |
+| `word-count` | Zsh: Word count for current workspace |
 | `fox-clean` | Zsh: system maintenance utility |
 | `fox-fingerprint` | Zsh: biometric setup automation |
 

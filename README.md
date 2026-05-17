@@ -1,4 +1,4 @@
-# FoxML_Workstation
+# Linux_Theme
 
 Opinionated Arch Linux + Hyprland workstation provisioner. Native C++ install orchestrator, integrated local-AI tooling, hardened security baseline, multi-theme rendering for ~25 apps.
 
@@ -16,9 +16,9 @@ Not just dotfiles. `install.sh` is a 90-line wrapper around `fox-install` — a 
 
 **Fresh machine, no clone needed:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Jennyfirrr/FoxML_Workstation/main/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Jennyfirrr/Linux_Theme/main/bootstrap.sh | bash
 ```
-Caches sudo, installs git+curl, clones to `~/code/FoxML_Workstation`, runs the full setup (theme + deps + AI stack + GitHub workspace clone). One `gh auth login` prompt mid-flow, otherwise hands-off.
+Caches sudo, installs git+curl, clones to `~/code/Linux_Theme`, runs the full setup (theme + deps + AI stack + GitHub workspace clone). One `gh auth login` prompt mid-flow, otherwise hands-off.
 
 **Already cloned:**
 ```bash
@@ -40,13 +40,13 @@ Caches sudo, installs git+curl, clones to `~/code/FoxML_Workstation`, runs the f
 |------|--------------|
 | `--monitor` | Surgical run of the multi-monitor layout wizard only |
 | `--deps` | Install Arch packages, Oh My Zsh, zsh plugins |
-| `--yes` | Auto-confirm every prompt |
-| `--ai` | Install Ollama + OpenCode + aider + `mxbai-embed-large` (see [AI layer](#ai-layer-optional)) |
-| `--models` | Pull tier-appropriate Qwen chat/coder stack (1.5B → 32B based on RAM+VRAM) |
-| `--github` | Clone all your repos into `~/code` |
-| `--secure` | UFW + Fail2ban + Auditd + SSH hardening wizard |
-| `--perf` | Chrony for high-precision time sync |
-| `--privacy` | DNS-over-HTTPS |
+| --yes | Auto-confirm every prompt |
+| --ai | Install Ollama + OpenCode + aider + mxbai-embed-large (see [AI layer](#ai-layer-optional)) |
+| --models | Pull tier-appropriate Qwen chat/coder stack (1.5B → 32B based on RAM+VRAM) |
+| --github | Clone all your repos into ~/code |
+| --secure | UFW + Fail2ban + Auditd + SSH hardening wizard |
+| --perf | Chrony for high-precision time sync |
+| --privacy | DNS-over-HTTPS |
 | `--vault` | GPG-encrypted `pass` manager + Git signing |
 | `--nvidia` | nvidia-open-dkms + Hyprland on dGPU (Optimus laptops) |
 | `--render` | Re-render templates + redeploy + restart waybar/mako/dunst |
@@ -61,7 +61,7 @@ Caches sudo, installs git+curl, clones to `~/code/FoxML_Workstation`, runs the f
 Boot the Arch ISO and load FoxML directly:
 
 ```bash
-archinstall --config https://raw.githubusercontent.com/Jennyfirrr/FoxML_Workstation/main/shared/foxml-profile.json
+archinstall --config https://raw.githubusercontent.com/Jennyfirrr/Linux_Theme/main/shared/foxml-profile.json
 ```
 
 Installs `linux-zen`, NVIDIA drivers, and runs the bootstrap on first boot.

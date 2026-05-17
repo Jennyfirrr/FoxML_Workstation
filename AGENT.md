@@ -1,4 +1,4 @@
-# FoxML_Workstation — Agent Mandates
+# Linux_Theme — Agent Mandates
 
 Persistent context for AI assistants working on this repo. Project-specific rules; supplements [`CLAUDE.md`](CLAUDE.md), [`INVARIANTS.md`](INVARIANTS.md), and [`RECOVERY.md`](RECOVERY.md).
 

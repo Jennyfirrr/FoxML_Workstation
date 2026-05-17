@@ -1,4 +1,4 @@
-# FoxML_Workstation — Development Guide
+# Linux_Theme — Development Guide
 
 Project-specific guidance for working on the opinionated Arch + Hyprland + local-AI workstation. Loaded automatically when `claude` runs from this directory.
 

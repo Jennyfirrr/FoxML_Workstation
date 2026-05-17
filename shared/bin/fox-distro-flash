@@ -1,10 +1,10 @@
 #!/bin/bash
 # fox-distro-flash — Safe flashing utility for the FoxML ISO
 
-# Locate the FoxML_Workstation repo. Convention is ~/code/FoxML_Workstation/
+# Locate the Linux_Theme repo. Convention is ~/code/Linux_Theme/
 # per CLAUDE.md; override with FOXML_WORKSTATION_DIR=... if you keep it
 # elsewhere. Avoids hardcoding any particular user's $HOME path.
-WORKSTATION_DIR="${FOXML_WORKSTATION_DIR:-$HOME/code/FoxML_Workstation}"
+WORKSTATION_DIR="${FOXML_WORKSTATION_DIR:-$HOME/code/Linux_Theme}"
 ISO_DIR="${WORKSTATION_DIR}/distro/out"
 ISO_FILE="${ISO_DIR}/FoxML-OS-$(date +%Y.%m.%d)-x86_64.iso"
 

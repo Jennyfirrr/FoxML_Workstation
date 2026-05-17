@@ -64,6 +64,8 @@ window#waybar > box {
     margin: __MARGIN_MOD__;
     border-radius: {{ROUNDING}}px;
     color: @peach;
+    /* Mirrors the active-window shadow — same SHADOW_* tokens drive hyprland/theme.conf. */
+    box-shadow: 0 0 {{SHADOW_RANGE}}px rgba(0, 0, 0, {{SHADOW_ALPHA}});
 }
 
 #custom-clock,

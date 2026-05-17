@@ -161,6 +161,17 @@ if command -v notify-send >/dev/null 2>&1; then
         "$title" "$body" 2>>"$LOG_FILE" || true
 fi
 
+# Blocking events (the agent is waiting on a decision) get an extra BEL
+# to the controlling terminal. Kitty translates BEL into an xdg_activation
+# request when window_alert_on_bell=yes, which Hyprland surfaces as the
+# .urgent class on the workspace — waybar lights it red+bold so the user
+# can find the waiting pane from any workspace. Audio bell is disabled in
+# kitty.conf so this is silent. stop/subagent events are not "blocking"
+# in the same sense, so they get the popup only.
+if [[ "$event" == "notification" ]]; then
+    printf '\a' > /dev/tty 2>/dev/null || true
+fi
+
 # Append to the triage queue (JSONL). flock serializes concurrent appends
 # from multiple panes. Uses the same FOXML_RUNTIME_DIR computed above so
 # the queue file isn't world-readable on /tmp-fallback systems.

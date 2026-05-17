@@ -3123,6 +3123,11 @@ polkit.addRule(function(action, subject) {
     // 5-minute keep-window. Applies to package installs, USB mounts
     // by non-owners, NetworkManager hotspot create, etc.
     if (subject.isInGroup("wheel")) {
+        // Exception: switching power profiles is harmless enough to allow
+        // without a re-prompt (usually allowed for active users anyway).
+        if (action.id == "org.freedesktop.UPower.PowerProfiles.switch-profile") {
+            return undefined;
+        }
         return polkit.Result.AUTH_ADMIN;
     }
 });

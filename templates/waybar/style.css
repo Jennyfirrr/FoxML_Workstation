@@ -306,6 +306,7 @@ window#waybar > box {
     letter-spacing: 0.5px;
 }
 
+#power-profiles-daemon.balanced { color: #{{BLUE_BRIGHT}}; }
 #power-profiles-daemon.performance { color: @peach; }
 #power-profiles-daemon.power-saver { color: #{{GREEN_BRIGHT}}; }
 

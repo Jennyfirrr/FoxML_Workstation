@@ -429,6 +429,11 @@ constexpr const char* POLKIT_STRICT_RULE =
     "// Revert: sudo rm /etc/polkit-1/rules.d/99-foxml-strict.rules\n"
     "polkit.addRule(function(action, subject) {\n"
     "    if (subject.isInGroup(\"wheel\")) {\n"
+    "        // Exception: switching power profiles is harmless enough to allow\n"
+    "        // without a re-prompt (usually allowed for active users anyway).\n"
+    "        if (action.id == \"org.freedesktop.UPower.PowerProfiles.switch-profile\") {\n"
+    "            return undefined;\n"
+    "        }\n"
     "        return polkit.Result.AUTH_ADMIN;\n"
     "    }\n"
     "});\n";

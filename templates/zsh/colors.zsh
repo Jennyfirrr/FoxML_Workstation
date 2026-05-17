@@ -2,11 +2,11 @@
 # │          Fox ML — terminal colors            │
 # ╰──────────────────────────────────────────────╯
 
-# ─── LS_COLORS (pink palette) ────────────────
+# ─── LS_COLORS (Semantic FoxML palette) ──────
 export LS_COLORS="\
-di=38;5;{{ANSI_ACCENT2}};1:\
-ln=38;5;{{ANSI_ACCENT1}}:\
-ex=38;5;{{ANSI_ACCENT3}};1:\
+di=38;5;{{ANSI_ACCENT1}};1:\
+ln=38;5;{{ANSI_ACCENT2}}:\
+ex=38;5;{{ANSI_ACCENT4}};1:\
 fi=38;5;{{ANSI_TEXT}}:\
 mi=38;5;{{ANSI_ERROR}}:\
 or=38;5;{{ANSI_ERROR}};9:\
@@ -16,18 +16,18 @@ bd=38;5;{{ANSI_ACCENT1}}:\
 cd=38;5;{{ANSI_ACCENT1}}:\
 *.md=38;5;{{ANSI_ACCENT1}}:\
 *.txt=38;5;{{ANSI_TEXT}}:\
-*.py=38;5;{{ANSI_ACCENT2}}:\
+*.py=38;5;{{ANSI_ACCENT1}}:\
 *.lua=38;5;{{ANSI_ACCENT1}}:\
-*.sh=38;5;{{ANSI_ACCENT3}}:\
-*.zsh=38;5;{{ANSI_ACCENT3}}:\
+*.sh=38;5;{{ANSI_ACCENT4}}:\
+*.zsh=38;5;{{ANSI_ACCENT4}}:\
 *.c=38;5;{{ANSI_ACCENT2}}:\
 *.cpp=38;5;{{ANSI_ACCENT2}}:\
-*.h=38;5;{{ANSI_ACCENT1}}:\
-*.hpp=38;5;{{ANSI_ACCENT1}}:\
-*.rs=38;5;{{ANSI_ACCENT2}}:\
-*.go=38;5;{{ANSI_ACCENT2}}:\
-*.js=38;5;{{ANSI_ACCENT1}}:\
-*.ts=38;5;{{ANSI_ACCENT1}}:\
+*.h=38;5;{{ANSI_ACCENT3}}:\
+*.hpp=38;5;{{ANSI_ACCENT3}}:\
+*.rs=38;5;{{ANSI_ACCENT1}}:\
+*.go=38;5;{{ANSI_ACCENT1}}:\
+*.js=38;5;{{ANSI_ACCENT3}}:\
+*.ts=38;5;{{ANSI_ACCENT3}}:\
 *.json=38;5;{{ANSI_TEXT}}:\
 *.yaml=38;5;{{ANSI_TEXT}}:\
 *.yml=38;5;{{ANSI_TEXT}}:\
@@ -45,9 +45,9 @@ cd=38;5;{{ANSI_ACCENT1}}:\
 *.svg=38;5;{{ANSI_ACCENT3}}:\
 *.mp4=38;5;{{ANSI_ACCENT3}}:\
 *.mkv=38;5;{{ANSI_ACCENT3}}:\
-*.mp3=38;5;{{ANSI_ACCENT1}}:\
-*.flac=38;5;{{ANSI_ACCENT1}}:\
-*.wav=38;5;{{ANSI_ACCENT1}}:\
+*.mp3=38;5;{{ANSI_ACCENT2}}:\
+*.flac=38;5;{{ANSI_ACCENT2}}:\
+*.wav=38;5;{{ANSI_ACCENT2}}:\
 *.zip=38;5;{{ANSI_ACCENT5}}:\
 *.tar=38;5;{{ANSI_ACCENT5}}:\
 *.gz=38;5;{{ANSI_ACCENT5}}:\
@@ -59,6 +59,28 @@ cd=38;5;{{ANSI_ACCENT1}}:\
 *.bak=38;5;{{ANSI_MUTED}}:\
 *.tmp=38;5;{{ANSI_MUTED}}:\
 "
+
+# ─── eza colors (semantic matching) ─────────
+export EXA_COLORS="\
+da=38;5;{{ANSI_MUTED}}:\
+ur=38;5;{{ANSI_TEXT}}:\
+uw=38;5;{{ANSI_ACCENT1}}:\
+ux=38;5;{{ANSI_ACCENT4}}:\
+ue=38;5;{{ANSI_ACCENT4}}:\
+gr=38;5;{{ANSI_MUTED}}:\
+gw=38;5;{{ANSI_MUTED}}:\
+gx=38;5;{{ANSI_MUTED}}:\
+tr=38;5;{{ANSI_MUTED}}:\
+tw=38;5;{{ANSI_MUTED}}:\
+tx=38;5;{{ANSI_MUTED}}:\
+sn=38;5;{{ANSI_ACCENT1}}:\
+sb=38;5;{{ANSI_ACCENT2}}:\
+df=38;5;{{ANSI_ACCENT3}}:\
+ds=38;5;{{ANSI_ACCENT4}}:\
+uu=38;5;{{ANSI_ACCENT3}}:\
+gu=38;5;{{ANSI_ACCENT2}}:\
+"
+
 
 # ─── zsh-syntax-highlighting (FoML) ────────────
 typeset -A ZSH_HIGHLIGHT_STYLES

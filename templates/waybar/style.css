@@ -71,6 +71,15 @@ window#waybar > box {
     padding: __PAD_MOD__;
 }
 
+/* AI status sits alone on the left but should read as a peer of the
+   right-side stats: same bold/letter-spacing/font-size so the bar's
+   typography is uniform. */
+#custom-ai_status {
+    font-size: __FONT_STATS__pt;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
 #tray > * {
     padding: __PAD_MOD__;
 }
@@ -111,35 +120,57 @@ window#waybar > box {
     margin: 0;
 }
 
+/* Workspaces share the peach palette with the rest of the bar.
+   IMPORTANT: workspace buttons wrap their text in a child GtkLabel,
+   and the universal `* { color: @fg }` rule above selects that label
+   directly (specificity ties resolve in `*`'s favor for the label
+   itself, not the button parent). So per-state color rules MUST
+   target the label explicitly to win. */
 #workspaces button {
     background-color: transparent;
     border: none;
-    color: @dim;
+    border-bottom: 2px solid transparent;
     padding: 0px 8px;
     margin: 2px 2px;
 }
 
-#workspaces button.persistent {
-    color: @dim;
+#workspaces button label,
+#workspaces button.persistent label {
+    color: rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}}, 0.65);
 }
 
 #workspaces button:not(.empty) {
-    color: @fg;
-    border-bottom: 2px solid @peach;
+    border-bottom: 2px solid rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}}, 0.35);
 }
 
-#workspaces button.active {
-    background-color: rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}}, 0.35);
+#workspaces button:not(.empty) label {
     color: @peach;
-    border: 2px solid @peach;
-    box-shadow: inset 0 0 8px rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}}, 0.5);
-    text-shadow: 0 0 8px rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}}, 0.4);
+}
+
+/* Active = full peach bottom bar + bold label. Occupied workspaces
+   get the dim 35%-peach bar from the :not(.empty) rule above; active
+   bumps that to a full-opacity bar so it reads brighter, and the bold
+   weight on the label provides the second tier of differentiation. */
+#workspaces button.active {
+    background-color: transparent;
+    border-bottom: 2px solid @peach;
+    box-shadow: none;
+}
+
+#workspaces button.active label {
+    color: @peach;
+    font-weight: bold;
 }
 
 #workspaces button.urgent {
-    background-color: rgba({{RED_R}},{{RED_G}},{{RED_B}}, 0.3);
+    background-color: transparent;
+    border-bottom: 2px solid #{{RED}};
+    box-shadow: none;
+}
+
+#workspaces button.urgent label {
     color: #{{RED}};
-    border: 2px solid #{{RED}};
+    font-weight: bold;
 }
 
 
@@ -170,12 +201,12 @@ window#waybar > box {
 
 #custom-security.warning {
     color: #{{YELLOW}};
-    border: 2px solid #{{YELLOW}};
+    text-shadow: 0 0 6px rgba({{YELLOW_R}},{{YELLOW_G}},{{YELLOW_B}}, 0.4);
 }
 
 #custom-security.critical {
     color: #{{RED}};
-    border: 2px solid #{{RED}};
+    text-shadow: 0 0 6px rgba({{RED_R}},{{RED_G}},{{RED_B}}, 0.5);
 }
 
 #custom-overwatch {
@@ -184,7 +215,7 @@ window#waybar > box {
 
 #custom-overwatch.alert {
     color: #{{YELLOW}};
-    border: 2px solid #{{YELLOW}};
+    text-shadow: 0 0 6px rgba({{YELLOW_R}},{{YELLOW_G}},{{YELLOW_B}}, 0.4);
 }
 
 /* Sentry: inherit the standard @bubble background + @border from the
@@ -247,18 +278,21 @@ window#waybar > box {
     opacity: 0.8;
 }
 
+/* Severity states stay borderless so the shared group bubble keeps a
+   single outline — a 2px box around one inner module fights the
+   grouped-capsule layout. The color + glow alone reads as the alert. */
 #custom-cpu.warning,
 #memory.warning,
 #custom-disk.warning {
     color: #{{YELLOW}};
-    border: 2px solid #{{YELLOW}};
+    text-shadow: 0 0 6px rgba({{YELLOW_R}},{{YELLOW_G}},{{YELLOW_B}}, 0.4);
 }
 
 #custom-cpu.critical,
 #memory.critical,
 #custom-disk.critical {
     color: #{{RED}};
-    border: 2px solid #{{RED}};
+    text-shadow: 0 0 6px rgba({{RED_R}},{{RED_G}},{{RED_B}}, 0.5);
 }
 
 /* ─────────────────────────────────────────
@@ -296,12 +330,12 @@ window#waybar > box {
 
 #custom-battery.warning {
     color: #{{YELLOW}};
-    border: 2px solid #{{YELLOW}};
+    text-shadow: 0 0 6px rgba({{YELLOW_R}},{{YELLOW_G}},{{YELLOW_B}}, 0.4);
 }
 
 #custom-battery.critical {
     color: #{{RED}};
-    border: 2px solid #{{RED}};
+    text-shadow: 0 0 6px rgba({{RED_R}},{{RED_G}},{{RED_B}}, 0.5);
 }
 
 /* ─────────────────────────────────────────
@@ -332,12 +366,16 @@ window#waybar > box {
 /* ─────────────────────────────────────────
    Tooltips
    ───────────────────────────────────────── */
+/* Tooltips inherit the bar's bubble vocabulary: same translucent BG,
+   same corner radius, no border, peach text. Reads as "this popup is
+   part of waybar" rather than a separate GTK chrome layer. */
 tooltip {
-    background: rgba({{BG_R}},{{BG_G}},{{BG_B}}, 0.9);
-    border: 2px solid rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}}, 0.4);
-    border-radius: 0;
+    background-color: @bubble;
+    border: none;
+    border-radius: {{ROUNDING}}px;
+    padding: 6px 10px;
 }
 
 tooltip label {
-    color: @fg;
+    color: @peach;
 }

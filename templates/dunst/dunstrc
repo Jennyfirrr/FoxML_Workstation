@@ -67,22 +67,22 @@
     mouse_right_click = close_all
 
 [urgency_low]
-    background = "#{{BG_DUNST}}{{POPUP_BG_OPACITY_HEX}}"
-    foreground = "#{{FG_DIM}}"
+    background = "#{{BG}}{{POPUP_BG_OPACITY_HEX}}"
+    foreground = "#{{PRIMARY}}"
     frame_color = "#{{SURFACE}}"
     highlight = "#{{PRIMARY}}"
     timeout = 5
 
 [urgency_normal]
-    background = "#{{BG_DUNST}}{{POPUP_BG_OPACITY_HEX}}"
-    foreground = "#{{FG}}"
+    background = "#{{BG}}{{POPUP_BG_OPACITY_HEX}}"
+    foreground = "#{{PRIMARY}}"
     frame_color = "#{{PRIMARY}}"
     highlight = "#{{PRIMARY}}"
     timeout = 8
 
 [urgency_critical]
-    background = "#{{BG_DUNST}}{{POPUP_BG_OPACITY_HEX}}"
-    foreground = "#{{FG}}"
+    background = "#{{BG}}{{POPUP_BG_OPACITY_HEX}}"
+    foreground = "#{{PRIMARY}}"
     frame_color = "#{{RED}}"
     highlight = "#{{RED}}"
     timeout = 0
@@ -90,8 +90,8 @@
 # Spotify notifications - lavender accent
 [spotify]
     appname = Spotify
-    background = "#{{BG_DUNST}}{{POPUP_BG_OPACITY_HEX}}"
-    foreground = "#{{FG}}"
+    background = "#{{BG}}{{POPUP_BG_OPACITY_HEX}}"
+    foreground = "#{{PRIMARY}}"
     frame_color = "#{{ACCENT}}"
     highlight = "#{{ACCENT}}"
     format = "<b>%s</b>\n%b"
@@ -100,8 +100,8 @@
 # Spotify (flatpak)
 [spotify-flatpak]
     appname = "com.spotify.Client"
-    background = "#{{BG_DUNST}}{{POPUP_BG_OPACITY_HEX}}"
-    foreground = "#{{FG}}"
+    background = "#{{BG}}{{POPUP_BG_OPACITY_HEX}}"
+    foreground = "#{{PRIMARY}}"
     frame_color = "#{{ACCENT}}"
     highlight = "#{{ACCENT}}"
     format = "<b>%s</b>\n%b"
@@ -114,8 +114,8 @@
 # urgency_critical above.
 [claude]
     appname = Claude
-    background = "#{{BG_DUNST}}{{POPUP_BG_OPACITY_HEX}}"
-    foreground = "#{{FG}}"
+    background = "#{{BG}}{{POPUP_BG_OPACITY_HEX}}"
+    foreground = "#{{PRIMARY}}"
     frame_color = "#{{PRIMARY}}"
     highlight = "#{{PRIMARY}}"
     format = "<b>%s</b>\n%b"
@@ -123,8 +123,8 @@
 
 [gemini]
     appname = Gemini
-    background = "#{{BG_DUNST}}{{POPUP_BG_OPACITY_HEX}}"
-    foreground = "#{{FG}}"
+    background = "#{{BG}}{{POPUP_BG_OPACITY_HEX}}"
+    foreground = "#{{PRIMARY}}"
     frame_color = "#{{PRIMARY}}"
     highlight = "#{{PRIMARY}}"
     format = "<b>%s</b>\n%b"

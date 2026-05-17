@@ -1,5 +1,8 @@
 #!/bin/bash
-# FoxML AI Status — Waybar module for OpenCode model status
+# FoxML AI Status — Waybar module for OpenCode model status.
+# Display reads as a peer of the memory module: "<icon> <size> X/Yg",
+# where X is the loaded model's GPU footprint (from `ollama ps`) and Y
+# is total VRAM. Falls back to "idle" when no model is resident.
 
 CONFIG_FILE="$HOME/.config/opencode/opencode.json"
 
@@ -8,64 +11,83 @@ if [[ ! -f "$CONFIG_FILE" ]]; then
     exit 0
 fi
 
-# Use jq for robust extraction
 MODEL_FULL=$(jq -r '.model // empty' "$CONFIG_FILE")
 if [[ -z "$MODEL_FULL" || "$MODEL_FULL" == "null" ]]; then
     echo '{"text": "  OFF", "tooltip": "No model set in config", "class": "offline"}'
     exit 0
 fi
 
-# Strip provider prefix (e.g., ollama/)
 MODEL_NAME="${MODEL_FULL#*/}"
-
-# Extract Size (e.g. 7b, 14B)
 SIZE=$(echo "$MODEL_NAME" | grep -ioP '\d+[bB]' | head -n1 | tr '[:lower:]' '[:upper:]')
+DISPLAY_TAG="${SIZE:-${MODEL_NAME:0:8}}"
 
-if [[ -n "$SIZE" ]]; then
-    # User requested concise display (e.g. "7B")
-    DISPLAY_TAG="$SIZE"
-else
-    # Fallback to a truncated version of the name if no size detected
-    DISPLAY_TAG="${MODEL_NAME:0:8}"
-fi
-
-# Determine icon and label
-VRAM_INFO=""
-VRAM_PERCENT=0
+# ── Total VRAM (GB, one decimal) ─────────────────────────────────
+vram_total_gb=""
 if command -v nvidia-smi &>/dev/null; then
-    VRAM_RAW=$(nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader,nounits 2>/dev/null | tr -d ' ')
-    if [[ -n "$VRAM_RAW" ]]; then
-        VRAM_USED=${VRAM_RAW%,*}
-        VRAM_TOTAL=${VRAM_RAW#*,}
-        if [[ "$VRAM_TOTAL" -gt 0 ]]; then
-            VRAM_PERCENT=$(( VRAM_USED * 100 / VRAM_TOTAL ))
-            VRAM_INFO=" (VRAM: ${VRAM_PERCENT}%)"
+    vram_total_mb=$(nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits 2>/dev/null \
+                    | head -1 | tr -d ' ')
+    if [[ "$vram_total_mb" =~ ^[0-9]+$ ]] && (( vram_total_mb > 0 )); then
+        vram_total_gb=$(awk -v mb="$vram_total_mb" 'BEGIN { printf "%.1f", mb/1024 }')
+    fi
+fi
+
+# ── Loaded model footprint from `ollama ps` ──────────────────────
+# SIZE column embeds a space ("6.0 GB"), so grep the line for the
+# pattern instead of relying on awk column counts.
+loaded_size_gb=""
+loaded_proc=""
+loaded_name=""
+if command -v ollama &>/dev/null; then
+    ps_line=$(ollama ps 2>/dev/null | awk 'NR==2 { print; exit }')
+    if [[ -n "$ps_line" ]]; then
+        loaded_name=$(awk '{print $1}' <<<"$ps_line")
+        # "6.0 GB" or "512 MB" — normalize to GB with one decimal
+        if [[ "$ps_line" =~ ([0-9]+\.?[0-9]*)[[:space:]]*(GB|MB) ]]; then
+            val="${BASH_REMATCH[1]}"
+            unit="${BASH_REMATCH[2]}"
+            if [[ "$unit" == "MB" ]]; then
+                loaded_size_gb=$(awk -v v="$val" 'BEGIN { printf "%.1f", v/1024 }')
+            else
+                loaded_size_gb=$(awk -v v="$val" 'BEGIN { printf "%.1f", v }')
+            fi
+        fi
+        # PROCESSOR column like "100% GPU" / "50%/50% CPU/GPU"
+        if [[ "$ps_line" =~ ([0-9]+%[[:space:]]*[A-Z/]+) ]]; then
+            loaded_proc="${BASH_REMATCH[1]}"
         fi
     fi
 fi
 
-# Categorize current load for the tooltip
-LOAD_LABEL="Safe"
-[[ $VRAM_PERCENT -gt 50 ]] && LOAD_LABEL="Moderate"
-[[ $VRAM_PERCENT -gt 85 ]] && LOAD_LABEL="Heavy"
-[[ $VRAM_PERCENT -gt 95 ]] && LOAD_LABEL="CRITICAL"
-
-ICON=" "
-LABEL="$DISPLAY_TAG$VRAM_INFO"
+# ── Compose text + class ─────────────────────────────────────────
+ICON=""
 CLASS="smart"
-
-# Apply tier-based coloring based on size
 if [[ -n "$SIZE" ]]; then
-    NUM_SIZE=$(echo "$SIZE" | tr -dc '0-9')
-    if [[ -n "$NUM_SIZE" ]]; then
-        if [[ "$NUM_SIZE" -le 8 ]]; then
-            CLASS="fast"
-        elif [[ "$NUM_SIZE" -le 20 ]]; then
-            CLASS="smart"
-        else
-            CLASS="expert"
+    num=$(echo "$SIZE" | tr -dc '0-9')
+    if [[ -n "$num" ]]; then
+        if   (( num <= 8 ));  then CLASS="fast"
+        elif (( num <= 20 )); then CLASS="smart"
+        else                       CLASS="expert"
         fi
     fi
 fi
 
-echo "{\"text\": \"$ICON $LABEL\", \"tooltip\": \"Model: $MODEL_NAME\\nStatus: $LOAD_LABEL$VRAM_INFO\", \"class\": \"$CLASS\"}"
+if [[ -n "$loaded_size_gb" && -n "$vram_total_gb" ]]; then
+    TEXT="$ICON $DISPLAY_TAG $loaded_size_gb/${vram_total_gb}g"
+elif [[ -n "$loaded_size_gb" ]]; then
+    TEXT="$ICON $DISPLAY_TAG ${loaded_size_gb}g"
+else
+    TEXT="$ICON $DISPLAY_TAG idle"
+fi
+
+# ── Tooltip ──────────────────────────────────────────────────────
+tip="Model: $MODEL_NAME"
+if [[ -n "$loaded_name" ]]; then
+    tip+="\\nLoaded: $loaded_name"
+    [[ -n "$loaded_size_gb" ]] && tip+=" (${loaded_size_gb}g)"
+    [[ -n "$loaded_proc"    ]] && tip+="  $loaded_proc"
+else
+    tip+="\\nLoaded: (idle)"
+fi
+[[ -n "$vram_total_gb" ]] && tip+="\\nVRAM total: ${vram_total_gb}g"
+
+printf '{"text":"%s","tooltip":"%s","class":"%s"}\n' "$TEXT" "$tip" "$CLASS"

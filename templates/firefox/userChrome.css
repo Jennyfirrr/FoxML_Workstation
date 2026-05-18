@@ -83,11 +83,11 @@ toolbarbutton.titlebar-button,
 }
 
 #urlbar {
-  border: 2px solid var(--fox-blush) !important;
+  border: none !important;
 }
 
 #urlbar:focus-within {
-  border-color: var(--fox-blush) !important;
+  border: none !important;
   box-shadow: 0 0 8px rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.45) !important;
 }
 
@@ -127,8 +127,7 @@ toolbarbutton.titlebar-button,
   background-color: var(--fox-bg) !important;
   color: var(--fox-fg) !important;
   border-radius: 0 0 10px 10px !important;
-  border: 1px solid var(--fox-blush) !important;
-  border-top: none !important;
+  border: none !important;
 }
 
 .urlbarView-row,

@@ -161,6 +161,7 @@ window#waybar > box {
 #workspaces button.active label {
     color: @peach;
     font-weight: bold;
+    text-shadow: 0 0 6px rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}}, 0.4);
 }
 
 #workspaces button.urgent {
@@ -239,14 +240,17 @@ window#waybar > box {
 
 #custom-ai_status.fast {
     color: @peach;
+    text-shadow: 0 0 6px rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}}, 0.4);
 }
 
 #custom-ai_status.smart {
     color: @peach;
+    text-shadow: 0 0 6px rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}}, 0.45);
 }
 
 #custom-ai_status.expert {
     color: @peach;
+    text-shadow: 0 0 8px rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}}, 0.5);
 }
 
 #custom-net_speed {
@@ -380,7 +384,7 @@ window#waybar > box {
    part of waybar" rather than a separate GTK chrome layer. */
 tooltip {
     background-color: @bubble;
-    border: 1px solid rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}}, 0.45);
+    border: none;
     border-radius: {{ROUNDING}}px;
     padding: 8px 12px;
 }

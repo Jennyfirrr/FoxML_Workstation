@@ -96,11 +96,11 @@ combobox button {
 
 combobox button:hover {
   background-color: rgba({{FG_R}},{{FG_G}},{{FG_B}},0.07);
-  border-color: rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.2);
+  border-color: rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.3);
 }
 
 combobox button:focus {
-  border-color: rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.35);
+  border-color: rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.5);
   background-color: rgba({{FG_R}},{{FG_G}},{{FG_B}},0.06);
 }
 
@@ -131,13 +131,13 @@ entry {
   border: 1px solid rgba({{FG_R}},{{FG_G}},{{FG_B}},0.08);
   padding: 8px 12px;
   font-size: 14px;
-  caret-color: #{{PRIMARY}};
+  caret-color: #{{BLUSH}};
   min-width: 200px;
   min-height: 18px;
 }
 
 entry:focus {
-  border-color: rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.35);
+  border-color: rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.5);
   background-color: rgba({{FG_R}},{{FG_G}},{{FG_B}},0.06);
 }
 
@@ -157,7 +157,7 @@ passwordentry {
 }
 
 passwordentry:focus {
-  border-color: rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.35);
+  border-color: rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.5);
   background-color: rgba({{FG_R}},{{FG_G}},{{FG_B}},0.06);
 }
 
@@ -171,9 +171,9 @@ passwordentry image {
 
 /* ─── Login button ───────────────────────────── */
 button.suggested-action {
-  background-color: rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.08);
-  color: rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.75);
-  border: 1px solid rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.15);
+  background-color: rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.12);
+  color: rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.85);
+  border: 1px solid rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.25);
   padding: 10px 48px;
   min-width: 100px;
   min-height: 18px;
@@ -188,13 +188,13 @@ button.suggested-action image {
 }
 
 button.suggested-action:hover {
-  background-color: rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.15);
-  border-color: rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.35);
+  background-color: rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.22);
+  border-color: rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.5);
   color: #{{FG}};
 }
 
 button.suggested-action:active {
-  background-color: rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.22);
+  background-color: rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.32);
   color: #{{FG}};
 }
 
@@ -234,13 +234,13 @@ infobar label {
 tooltip {
   background-color: rgba({{BG_R}},{{BG_G}},{{BG_B}},0.95);
   color: #{{FG}};
-  border: 1px solid rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.12);
+  border: 1px solid rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.25);
   padding: 4px 8px;
 }
 
 /* ─── Scrollbar ──────────────────────────────── */
 scrollbar slider {
-  background-color: rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.12);
+  background-color: rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.2);
   min-width: 6px;
   min-height: 6px;
 }
@@ -249,7 +249,7 @@ scrollbar slider {
 popover,
 popover > contents {
   background-color: rgba({{BG_R}},{{BG_G}},{{BG_B}},0.92);
-  border: 1px solid rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.1);
+  border: 1px solid rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.2);
   padding: 4px;
 }
 
@@ -266,5 +266,5 @@ popover modelbutton {
 
 popover modelbutton:hover,
 popover row:hover {
-  background-color: rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.1);
+  background-color: rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.15);
 }

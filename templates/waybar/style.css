@@ -380,9 +380,9 @@ window#waybar > box {
    part of waybar" rather than a separate GTK chrome layer. */
 tooltip {
     background-color: @bubble;
-    border: none;
+    border: 1px solid rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}}, 0.45);
     border-radius: {{ROUNDING}}px;
-    padding: 6px 10px;
+    padding: 8px 12px;
 }
 
 tooltip label {

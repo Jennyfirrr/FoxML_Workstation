@@ -17,7 +17,7 @@
     progress_bar_max_width = 300
     progress_bar_corner_radius = {{ROUNDING}}
 
-    # Appearance - crisp, no rounded corners
+    # Appearance - soft pink bubbles, generous rounding
     transparency = 0
     separator_height = 2
     padding = 12
@@ -69,15 +69,15 @@
 [urgency_low]
     background = "#{{BG}}{{POPUP_BG_OPACITY_HEX}}"
     foreground = "#{{PRIMARY}}"
-    frame_color = "#{{SURFACE}}"
-    highlight = "#{{PRIMARY}}"
+    frame_color = "#{{BLUSH}}"
+    highlight = "#{{BLUSH}}"
     timeout = 5
 
 [urgency_normal]
     background = "#{{BG}}{{POPUP_BG_OPACITY_HEX}}"
     foreground = "#{{PRIMARY}}"
-    frame_color = "#{{PRIMARY}}"
-    highlight = "#{{PRIMARY}}"
+    frame_color = "#{{BLUSH}}"
+    highlight = "#{{BLUSH}}"
     timeout = 8
 
 [urgency_critical]

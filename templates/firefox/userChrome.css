@@ -1,6 +1,7 @@
 /* Fox ML Theme for Firefox
-   bg: #{{BG}} | fg: #{{FG}} | peach: #{{PRIMARY}} | lavender: #{{ACCENT}} | pink: #{{SECONDARY}}
-   Sharp corners throughout
+   bg: #{{BG}} | fg: #{{FG}} | peach: #{{PRIMARY}} | lavender: #{{ACCENT}}
+   pink: #{{SECONDARY}} | blush: #{{BLUSH}}
+   Soft rounded corners + blush accents on focus/hover.
 */
 
 :root {
@@ -10,6 +11,7 @@
   --fox-dim: #{{FG_DIM}};
   --fox-peach: #{{PRIMARY}};
   --fox-pink: #{{SECONDARY}};
+  --fox-blush: #{{BLUSH}};
   --fox-pastel: #{{FG_PASTEL}};
   --fox-lavender: #{{ACCENT}};
   --fox-slate: #{{SURFACE}};
@@ -77,16 +79,16 @@ toolbarbutton.titlebar-button,
 #urlbar * {
   background-color: var(--fox-bg-alt) !important;
   color: var(--fox-fg) !important;
-  border-radius: 0 !important;
+  border-radius: 10px !important;
 }
 
 #urlbar {
-  border: 2px solid var(--fox-peach) !important;
+  border: 2px solid var(--fox-blush) !important;
 }
 
 #urlbar:focus-within {
-  border-color: var(--fox-pink) !important;
-  box-shadow: 0 0 6px rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.3) !important;
+  border-color: var(--fox-blush) !important;
+  box-shadow: 0 0 8px rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.45) !important;
 }
 
 #urlbar-input {
@@ -100,7 +102,7 @@ toolbarbutton.titlebar-button,
 #urlbar-background,
 #urlbar-input-container {
   background: var(--fox-bg-alt) !important;
-  border-radius: 0 !important;
+  border-radius: 10px !important;
 }
 
 /* Firefox 120+ URL bar overrides */
@@ -124,8 +126,8 @@ toolbarbutton.titlebar-button,
   background: var(--fox-bg) !important;
   background-color: var(--fox-bg) !important;
   color: var(--fox-fg) !important;
-  border-radius: 0 !important;
-  border: 1px solid var(--fox-peach) !important;
+  border-radius: 0 0 10px 10px !important;
+  border: 1px solid var(--fox-blush) !important;
   border-top: none !important;
 }
 
@@ -138,8 +140,8 @@ toolbarbutton.titlebar-button,
 
 .urlbarView-row:hover,
 .urlbarView-row[selected] {
-  background-color: rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.25) !important;
-  color: var(--fox-peach) !important;
+  background-color: rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.25) !important;
+  color: var(--fox-blush) !important;
 }
 
 .urlbarView-title strong,
@@ -163,7 +165,7 @@ toolbarbutton.titlebar-button,
   background: transparent !important;
   background-color: transparent !important;
   color: rgba({{FG_PASTEL_R}},{{FG_PASTEL_G}},{{FG_PASTEL_B}},0.5) !important;
-  border-radius: 0 !important;
+  border-radius: 10px !important;
 }
 
 .tabbrowser-tab[selected="{{SHOW_WELCOME}}"],
@@ -176,30 +178,30 @@ toolbarbutton.titlebar-button,
 }
 
 .tabbrowser-tab[selected="{{SHOW_WELCOME}}"] {
-  border-bottom: 2px solid var(--fox-peach) !important;
+  border-bottom: 2px solid var(--fox-blush) !important;
 }
 
 .tabbrowser-tab:hover:not([selected="{{SHOW_WELCOME}}"]),
 .tabbrowser-tab:hover:not([selected="{{SHOW_WELCOME}}"]) .tab-stack,
 .tabbrowser-tab:hover:not([selected="{{SHOW_WELCOME}}"]) .tab-background,
 .tabbrowser-tab:hover:not([selected="{{SHOW_WELCOME}}"]) .tab-content {
-  background: rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.1) !important;
-  background-color: rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}},0.1) !important;
+  background: rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.15) !important;
+  background-color: rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}},0.15) !important;
   color: var(--fox-pastel) !important;
 }
 
 .tab-background,
 .tab-stack {
-  border-radius: 0 !important;
+  border-radius: 10px !important;
 }
 
 .tab-close-button {
   color: var(--fox-dim) !important;
-  border-radius: 0 !important;
+  border-radius: 6px !important;
 }
 
 .tab-close-button:hover {
-  background: var(--fox-peach) !important;
+  background: var(--fox-blush) !important;
   color: var(--fox-bg) !important;
 }
 

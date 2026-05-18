@@ -21,7 +21,7 @@ window {
   anchor: north;
   y-offset: 50px;
   width: 480px;
-  border-radius: {{ROUNDING}}px;
+  border-radius: 18px;
   border: {{BORDER_SIZE}}px;
   border-color: #{{PRIMARY}};
   background-color: rgba({{BG_R}},{{BG_G}},{{BG_B}},{{POPUP_BG_OPACITY}});
@@ -64,7 +64,7 @@ listview {
 element {
   background-color: transparent;
   text-color: #{{FG}};
-  border-radius: {{ROUNDING}}px;
+  border-radius: 12px;
   padding: 8px 12px;
   border: 0px;
 }

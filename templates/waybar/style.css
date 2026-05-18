@@ -17,6 +17,8 @@
 @define-color slate     #{{SURFACE}};
 @define-color peach     #{{PRIMARY}};
 @define-color lavender  #{{ACCENT}};
+@define-color blush     #{{BLUSH}};
+@define-color gold      #{{GOLD}};
 @define-color dim       #{{FG_DIM}};
 
 @define-color bubble       rgba({{BG_R}},{{BG_G}},{{BG_B}}, 0.7);
@@ -129,9 +131,9 @@ window#waybar > box {
 #workspaces button {
     background-color: transparent;
     border: none;
-    border-bottom: 2px solid transparent;
-    padding: 0px 8px;
+    padding: 1px 8px;
     margin: 2px 2px;
+    border-radius: 8px;
 }
 
 #workspaces button label,
@@ -140,20 +142,19 @@ window#waybar > box {
 }
 
 #workspaces button:not(.empty) {
-    border-bottom: 2px solid rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}}, 0.35);
+    background-color: rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}}, 0.10);
 }
 
 #workspaces button:not(.empty) label {
     color: @peach;
 }
 
-/* Active = full peach bottom bar + bold label. Occupied workspaces
-   get the dim 35%-peach bar from the :not(.empty) rule above; active
-   bumps that to a full-opacity bar so it reads brighter, and the bold
-   weight on the label provides the second tier of differentiation. */
+/* Active = soft blush pill + bold label. Occupied buttons already get
+   the dim 10%-blush fill; active bumps that to ~28% so it reads
+   brighter, and bold weight on the label gives the second tier of
+   differentiation. The bar-style underline is gone — pills do the work. */
 #workspaces button.active {
-    background-color: transparent;
-    border-bottom: 2px solid @peach;
+    background-color: rgba({{BLUSH_R}},{{BLUSH_G}},{{BLUSH_B}}, 0.28);
     box-shadow: none;
 }
 
@@ -163,8 +164,7 @@ window#waybar > box {
 }
 
 #workspaces button.urgent {
-    background-color: transparent;
-    border-bottom: 2px solid #{{RED}};
+    background-color: rgba({{RED_R}},{{RED_G}},{{RED_B}}, 0.25);
     box-shadow: none;
 }
 
@@ -252,6 +252,8 @@ window#waybar > box {
 #custom-net_speed {
     color: @peach;
     font-size: __FONT_STATS__pt;
+    font-weight: 500;
+    letter-spacing: 0.4px;
 }
 
 #custom-clock {
@@ -268,8 +270,8 @@ window#waybar > box {
 #custom-disk,
 #custom-gpu {
     font-size: __FONT_STATS__pt;
-    font-weight: bold;
-    letter-spacing: 0.5px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
     color: @peach;
 }
 
@@ -280,11 +282,14 @@ window#waybar > box {
 
 /* Severity states stay borderless so the shared group bubble keeps a
    single outline — a 2px box around one inner module fights the
-   grouped-capsule layout. The color + glow alone reads as the alert. */
+   grouped-capsule layout. The color + glow alone reads as the alert.
+   Normal-state stats are weight-500; warning/critical re-bold so the
+   alert reads louder than the calm baseline. */
 #custom-cpu.warning,
 #memory.warning,
 #custom-disk.warning {
     color: #{{YELLOW}};
+    font-weight: bold;
     text-shadow: 0 0 6px rgba({{YELLOW_R}},{{YELLOW_G}},{{YELLOW_B}}, 0.4);
 }
 
@@ -292,6 +297,7 @@ window#waybar > box {
 #memory.critical,
 #custom-disk.critical {
     color: #{{RED}};
+    font-weight: bold;
     text-shadow: 0 0 6px rgba({{RED_R}},{{RED_G}},{{RED_B}}, 0.5);
 }
 
@@ -313,9 +319,9 @@ window#waybar > box {
 }
 
 #idle_inhibitor.activated {
-    color: @peach;
+    color: @gold;
     font-weight: bold;
-    text-shadow: 0 0 6px rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}}, 0.5);
+    text-shadow: 0 0 6px rgba({{GOLD_R}},{{GOLD_G}},{{GOLD_B}}, 0.5);
 }
 
 /* Composite battery (capacity text + volume/brightness in tooltip).
@@ -323,10 +329,12 @@ window#waybar > box {
    state selectors — same color set as the old built-in battery module. */
 #custom-battery {
     color: @peach;
+    text-shadow: 0 0 6px rgba({{PRIMARY_R}},{{PRIMARY_G}},{{PRIMARY_B}}, 0.35);
 }
 
 #custom-battery.charging {
-    color: @peach;
+    color: @gold;
+    text-shadow: 0 0 6px rgba({{GOLD_R}},{{GOLD_G}},{{GOLD_B}}, 0.45);
 }
 
 #custom-battery.warning {

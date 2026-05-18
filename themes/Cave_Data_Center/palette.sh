@@ -41,6 +41,8 @@ PRIMARY=2ea3f2
 SECONDARY=ffb200
 ACCENT=29c4a9
 SURFACE=1f1f38
+BLUSH=f29bb8
+GOLD=ffb200
 
 # ─── ANSI colors ───
 RED=cf2e2e

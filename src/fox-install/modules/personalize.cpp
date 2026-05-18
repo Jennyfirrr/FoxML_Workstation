@@ -61,6 +61,47 @@ bool parse_entry(const std::string& entry, std::string& name, std::string& res) 
     return !name.empty() && !res.empty();
 }
 
+// Helper to apply the same splice logic to two files (e.g. config and rendered).
+bool splice_file(const fs::path& p, const std::string& begin_sentinel,
+                 const std::string& end_sentinel, const std::string& new_content) {
+    if (!fs::exists(p)) return false;
+    std::ifstream in(p);
+    std::string body((std::istreambuf_iterator<char>(in)),
+                      std::istreambuf_iterator<char>());
+    in.close();
+
+    if (body.find(begin_sentinel) == std::string::npos) return false;
+
+    std::istringstream iss(body);
+    std::ostringstream out;
+    std::string line;
+    bool skip = false;
+    while (std::getline(iss, line)) {
+        if (line.find(begin_sentinel) != std::string::npos) {
+            out << line << "\n" << new_content << "\n";
+            skip = true;
+            continue;
+        }
+        if (line.find(end_sentinel) != std::string::npos) {
+            skip = false;
+            out << line << "\n";
+            continue;
+        }
+        if (!skip) out << line << "\n";
+    }
+
+    fs::path tmp = p;
+    tmp += ".foxin.tmp";
+    {
+        std::ofstream w(tmp);
+        w << out.str();
+    }
+    std::error_code ec;
+    fs::rename(tmp, p, ec);
+    if (ec) { fs::remove(tmp); return false; }
+    return true;
+}
+
 }  // namespace
 
 // ─── per-monitor wallpaper variants ────────────────────────────────
@@ -134,12 +175,17 @@ std::size_t generate_per_monitor_wallpapers(const Context& ctx,
 // background { … } block between the sentinel pair.
 bool personalize_hyprlock(const Context& ctx, const sidecar::Layout& layout) {
     fs::path hyprlock = ctx.config_home / "hypr/hyprlock.conf";
+    fs::path rendered = ctx.rendered_dir / "hyprlock/hyprlock.conf";
     if (!fs::exists(hyprlock))               return false;
     if (layout.monitor_resolutions.empty())  return false;
 
-    std::ifstream in(hyprlock);
-    std::string body((std::istreambuf_iterator<char>(in)),
-                      std::istreambuf_iterator<char>());
+    std::string body;
+    {
+        std::ifstream in(hyprlock);
+        body.assign((std::istreambuf_iterator<char>(in)),
+                     std::istreambuf_iterator<char>());
+    }
+    
     if (body.find("# foxml:hyprlock-backgrounds-begin") == std::string::npos) {
         ui::warn("hyprlock.conf missing sentinel — skipping personalisation");
         return false;
@@ -230,34 +276,14 @@ bool personalize_hyprlock(const Context& ctx, const sidecar::Layout& layout) {
     std::string new_blocks = blocks.str();
     if (!new_blocks.empty() && new_blocks.back() == '\n') new_blocks.pop_back();
 
-    // Splice between sentinels.
-    std::istringstream iss(body);
-    std::ostringstream out;
-    std::string line;
-    bool skip = false;
-    while (std::getline(iss, line)) {
-        if (line.find("# foxml:hyprlock-backgrounds-begin") != std::string::npos) {
-            out << line << "\n" << new_blocks << "\n";
-            skip = true;
-            continue;
-        }
-        if (line.find("# foxml:hyprlock-backgrounds-end") != std::string::npos) {
-            skip = false;
-            out << line << "\n";
-            continue;
-        }
-        if (!skip) out << line << "\n";
-    }
-
-    fs::path tmp = hyprlock;
-    tmp += ".foxin.tmp";
-    {
-        std::ofstream w(tmp);
-        w << out.str();
-    }
-    std::error_code ec;
-    fs::rename(tmp, hyprlock, ec);
-    if (ec) { fs::remove(tmp); return false; }
+    // Splice into both the live config and the rendered copy. Updating the
+    // rendered copy ensures detect_drift() sees the automated
+    // personalisation as "intended" on the next run, rather than flagging
+    // it as a manual live edit.
+    const std::string b_sentinel = "# foxml:hyprlock-backgrounds-begin";
+    const std::string e_sentinel = "# foxml:hyprlock-backgrounds-end";
+    splice_file(hyprlock, b_sentinel, e_sentinel, new_blocks);
+    splice_file(rendered, b_sentinel, e_sentinel, new_blocks);
 
     if (fallbacks > 0) {
         ui::ok("hyprlock personalised for " + std::to_string(mons) +
@@ -271,45 +297,21 @@ bool personalize_hyprlock(const Context& ctx, const sidecar::Layout& layout) {
 // ─── workspace 1 pin → PRIMARY ─────────────────────────────────────
 bool personalize_workspace_rules(const Context& ctx, const sidecar::Layout& layout) {
     fs::path rules = ctx.config_home / "hypr/modules/rules.conf";
+    // rules.conf is a shared module, so its rendered copy lives in shared_dir
+    // if not using --render. But wait, it might be in TEMPLATE_MAPPINGS too.
+    // Check rendered_dir first.
+    fs::path rendered = ctx.rendered_dir / "hyprland/rules.conf";
+
     if (!fs::exists(rules))            return false;
     if (layout.primary.empty())        return false;
 
-    std::ifstream in(rules);
-    std::string body((std::istreambuf_iterator<char>(in)),
-                      std::istreambuf_iterator<char>());
-    if (body.find("# foxml:workspace-pin-begin") == std::string::npos) {
-        return false;
-    }
-
     std::string new_line = "workspace = 1, monitor:" + layout.primary +
                            ", default:true";
-    std::istringstream iss(body);
-    std::ostringstream out;
-    std::string line;
-    bool skip = false;
-    while (std::getline(iss, line)) {
-        if (line.find("# foxml:workspace-pin-begin") != std::string::npos) {
-            out << line << "\n" << new_line << "\n";
-            skip = true;
-            continue;
-        }
-        if (line.find("# foxml:workspace-pin-end") != std::string::npos) {
-            skip = false;
-            out << line << "\n";
-            continue;
-        }
-        if (!skip) out << line << "\n";
-    }
-
-    fs::path tmp = rules;
-    tmp += ".foxin.tmp";
-    {
-        std::ofstream w(tmp);
-        w << out.str();
-    }
-    std::error_code ec;
-    fs::rename(tmp, rules, ec);
-    if (ec) { fs::remove(tmp); return false; }
+    
+    const std::string b_sentinel = "# foxml:workspace-pin-begin";
+    const std::string e_sentinel = "# foxml:workspace-pin-end";
+    splice_file(rules, b_sentinel, e_sentinel, new_line);
+    splice_file(rendered, b_sentinel, e_sentinel, new_line);
 
     ui::ok("workspace pin → " + layout.primary);
     return true;

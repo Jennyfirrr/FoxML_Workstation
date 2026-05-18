@@ -117,16 +117,44 @@ void do_firefox(const Context& ctx) {
     // and wins over prefs.js, so this stays correct even if Firefox
     // rewrites prefs.
     fs::path userjs = profile / "user.js";
-    const std::string pref =
-        "user_pref(\"toolkit.legacyUserProfileCustomizations.stylesheets\", true);";
+    const std::string key = "toolkit.legacyUserProfileCustomizations.stylesheets";
+    const std::string pref = "user_pref(\"" + key + "\", true);";
+    
     std::ifstream existing(userjs);
     std::string body((std::istreambuf_iterator<char>(existing)),
                       std::istreambuf_iterator<char>());
-    if (body.find("toolkit.legacyUserProfileCustomizations.stylesheets") ==
-        std::string::npos) {
-        std::ofstream out(userjs, std::ios::app);
-        out << "// FoxML theming\n" << pref << "\n";
-        ui::substep("Firefox user.js (legacy stylesheet pref)");
+    existing.close();
+
+    bool needs_update = false;
+    size_t pos = body.find(key);
+    if (pos == std::string::npos) {
+        // Missing entirely
+        body += "\n// FoxML theming\n" + pref + "\n";
+        needs_update = true;
+    } else {
+        // Check if it's set to false
+        size_t line_start = body.rfind("\n", pos);
+        if (line_start == std::string::npos) line_start = 0;
+        else line_start++;
+        
+        size_t line_end = body.find("\n", pos);
+        if (line_end == std::string::npos) line_end = body.size();
+        
+        std::string line = body.substr(line_start, line_end - line_start);
+        if (line.find("false") != std::string::npos) {
+            body.replace(line_start, line_end - line_start, pref);
+            needs_update = true;
+        }
+    }
+
+    if (needs_update) {
+        fs::path tmp = userjs;
+        tmp += ".tmp";
+        std::ofstream out(tmp);
+        out << body;
+        out.close();
+        fs::rename(tmp, userjs);
+        ui::substep("Firefox user.js (legacy stylesheet pref forced true)");
     }
     // Restart Firefox so the new CSS loads. Session restore brings tabs
     // back on relaunch. Skipped silently if not running.

@@ -44,7 +44,7 @@ _boot_info=$(df -Pk "$_boot_path" | awk 'NR==2 {print $2" "$4}')
 read -r _boot_total_kb _boot_free_kb <<< "$_boot_info"
 _boot_total_mb=$((_boot_total_kb / 1024))
 _boot_free_mb=$((_boot_free_kb / 1024))
-_rec_total_mb=1024
+_rec_total_mb=768
 _min_free_mb=256
 
 if (( _boot_total_mb < _rec_total_mb || _boot_free_mb < _min_free_mb )); then

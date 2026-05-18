@@ -64,8 +64,8 @@ void run_preflight(Context& ctx) {
     if (root.free_mb >= 0 && root.free_mb < 512) {
         ui::warn("/ has <512 MB free — pacman installs may fail");
     }
-    if (boot.free_mb >= 0 && (boot.total_mb < 1024 || boot.free_mb < 256)) {
-        ui::warn(boot_path.string() + " is below recommended size (1024MB total, 256MB free)");
+    if (boot.free_mb >= 0 && (boot.total_mb < 768 || boot.free_mb < 256)) {
+        ui::warn(boot_path.string() + " is below recommended size (768MB total, 256MB free)");
     }
 
     if (sh::dry_run()) {

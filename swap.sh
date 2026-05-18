@@ -44,7 +44,7 @@ _do_swap() {
 
     echo ":: Swapping to $theme..."
     "$fox_install" "$theme" \
-        --only theme,render,symlinks,specials --yes --quiet \
+        --only theme,render,symlinks,specials,personalize --yes --quiet \
         || { echo "swap failed"; exit 1; }
 
     if command -v hyprctl >/dev/null 2>&1; then
